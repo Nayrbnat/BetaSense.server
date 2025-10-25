@@ -1,7 +1,6 @@
 from pathlib import Path
 import sys
 import json
-from typing import Callable, Awaitable, Dict, Any
 
 from dotenv import load_dotenv
 from agents import Agent, Runner, trace
@@ -32,6 +31,7 @@ from agent.playbooktools import (
     retrieve_perspective_playbook, 
     retrieve_industry_playbook
 )
+from agent.generaltools import emit_thinking_process
 
 
 load_dotenv()
@@ -41,6 +41,8 @@ agent = Agent(
     name="Browser agent",
     instructions=SYSTEM_PROMPT,
     tools=[
+        emit_thinking_process,
+
         retrieve_perspective_playbook,
         retrieve_industry_playbook,
         
@@ -78,13 +80,21 @@ async def run_agent(
         )
 
         async for event in result.stream_events():
-            print(event) #TODO: Stream with front-end
-
+            if event.type == "run_item_stream_event" and hasattr(event, 'item'):
+                if event.item.type == "tool_call_item":
+                    if event.item.raw_item.name == "emit_thinking_process":
+                        args = json.loads(event.item.raw_item.arguments)
+                        print("[THINKING PROCESS]: ", args["thinking_process"])
+                    else:
+                        print("[TOOL CALL]: ", event.item.raw_item.name)
         return result.final_output
-    
 
+
+# To test only - delete this when front-end is connected
 if __name__ == "__main__":
+    INPUT = "Tell me about Apple's latest 10-K filing - top line revenue?"
+
     import asyncio
     session_id = "test-session"
-    user_input = "Tell me about Apple's latest 10-K filing - top line revenue?"
+    user_input = INPUT
     asyncio.run(run_agent(session_id, user_input))

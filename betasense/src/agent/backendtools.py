@@ -23,39 +23,55 @@ def earnings_transcript():
 
 
 @function_tool
-def tool_1(args) -> str:
-    # TODO: Bryan to write docstring below:
-    # NOTE: Don't overkill this - here should be brief and straight to the point -
-    # heavy lifting of prompt engineering should be done in the system prompt
-    """
-    Use this tool to do xxx:
-
-    Args:
-        arg 1: Arg 1 description
-        arg 2: Arg 2 description
-        ...
-
-    Returns:
-        e.g. a List of xxx
-    """
-    # TODO: Rui Kai to write the script below:
+def investor_presentation():
     pass
 
 
-# TODO: Bryan to add more tools here
+@function_tool
+def press_release():
+    pass
 
-"""
-Information toolbox:
-- earning transcript #
-- investor presentation *
-- press release #
-- expert transcripts #
-- euromonitor
-- financials
-- 10k *
-- sell side research *
-- comps
-- insider transactions
-- insider ownership
-- performance-based compensation
-"""
+
+@function_tool
+def expert_transcripts():
+    pass
+
+
+@function_tool
+def euromonitor():
+    pass
+
+
+@function_tool
+def financials():
+    pass
+
+
+@function_tool
+def file_10k():
+    pass
+
+
+@function_tool
+def sell_side_research():
+    pass
+
+
+@function_tool
+def comps():
+    pass
+
+
+@function_tool
+def insider_transactions():
+    pass
+
+
+@function_tool
+def insider_ownership():
+    pass
+
+
+@function_tool
+def performance_based_compensation():
+    pass

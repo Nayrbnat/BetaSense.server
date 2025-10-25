@@ -8,9 +8,9 @@ project_root = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(project_root))
 import betasense
 from prompts.systemprompt import SYSTEM_PROMPT
-from agent.browsertools import tool_1 as browser_tool_1
-from agent.backendtools import tool_1 as backend_tool_1
-from agent.playbooktools import tool_1 as playbook_tool_1
+from agent.browsertools import search_web, earnings_transcript
+from agent.backendtools import *
+from agent.playbooktools import retrieve_playbook
 
 
 load_dotenv()
@@ -20,9 +20,9 @@ agent = Agent(
     name="Browser agent",
     instructions=SYSTEM_PROMPT,
     tools=[
-        browser_tool_1,
-        backend_tool_1,
-        playbook_tool_1,
+        search_web,
+        earnings_transcript,
+        retrieve_playbook,
     ]
 )
 

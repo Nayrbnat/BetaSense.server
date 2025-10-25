@@ -29,23 +29,6 @@ def tool_1(args) -> str:
     pass
 
 
-# def retrieve_playbook(playbook_name: str) -> str:
-#     """
-#     Choose the right playbook based on the user's request.
-#     """
-#     if playbook_name == "long_term_value_investor":
-#         return LONG_TERM_VALUE_INVESTOR_PLAYBOOK
-#     elif playbook_name == "short_term_swing_trade":
-#         return SHORT_TERM_SWING_TRADE_PLAYBOOK
-#     elif playbook_name == "merger_arbitrage":
-#         return MERGER_ARBITRAGE_PLAYBOOK
-#     elif playbook_name == "carve_outs":
-#         return CARVE_OUTS_PLAYBOOK
-#     elif playbook_name == "growth_investor":
-#         return GROWTH_INVESTOR_PLAYBOOK
-#     elif playbook_name == "net_net_cigar_butt":
-
-
 # TODO: Bryan to add more tools here
 
 """

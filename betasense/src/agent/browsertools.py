@@ -2,11 +2,24 @@ from pathlib import Path
 import sys
 from typing import List, Dict, Any
 
-from agents import function_tool
+from agents import function_tool, WebSearchTool
 
 project_root = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(project_root))
 import betasense
+
+
+@function_tool
+def search_web():
+    """
+    Use this tool to do a general web search.
+    """
+    return WebSearchTool()
+
+
+@function_tool
+def earnings_transcript():
+    pass
 
 
 @function_tool

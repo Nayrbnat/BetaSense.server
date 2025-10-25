@@ -70,7 +70,7 @@ Perspective toolbox:
 - merger arbitrage
 - carve outs
 - growth investor
-- net net cigar butt
+- cigar butt
 - activist investor
 
 Industry toolbox:

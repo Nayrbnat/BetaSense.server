@@ -1,0 +1,6 @@
+{
+    "python.defaultInterpreterPath": "${workspaceFolder}/betavenv/bin/python",
+    "cursorpyright.analysis.extraPaths": [
+        "./betasense/src"
+    ]
+}

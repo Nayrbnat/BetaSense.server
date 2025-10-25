@@ -14,5 +14,7 @@ router = APIRouter()
 
 
 @router.post("/chat")
-async def chat(session_id: str, user_input: str):
+async def chat(session_id: str, user_input: str, password: str):
+    if password != "yourmumgay":
+        raise HTTPException(status_code=403, detail="Forbidden")
     return await run_agent(session_id, user_input)

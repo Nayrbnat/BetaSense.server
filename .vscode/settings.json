@@ -1,6 +1,8 @@
 {
     "python.defaultInterpreterPath": "${workspaceFolder}/betavenv/bin/python",
-    "cursorpyright.analysis.extraPaths": [
+    "python.analysis.extraPaths": [
         "./betasense/src"
-    ]
+    ],
+    "python.languageServer": "Pylance",
+    "editor.semanticHighlighting.enabled": true
 }

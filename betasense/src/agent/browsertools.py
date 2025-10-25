@@ -10,19 +10,6 @@ import betasense
 
 
 @function_tool
-def search_web():
-    """
-    Use this tool to do a general web search.
-    """
-    return WebSearchTool()
-
-
-@function_tool
-def earnings_transcript():
-    pass
-
-
-@function_tool
 def tool_1(args) -> str:
     # TODO: Bryan to write docstring below:
     # NOTE: Don't overkill this - here should be brief and straight to the point -

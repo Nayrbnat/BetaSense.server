@@ -12,28 +12,42 @@ import betasense
 @function_tool
 def search_web():
     """
-    Use this tool to do a general web search.
+    Use this tool to do a general web search and return a text output
     """
     return WebSearchTool()
 
 
 @function_tool
 def earnings_transcript():
+    '''
+    Use this tool to retrieve earnings transcripts from database and return a text output
+    '''
     pass
 
 
 @function_tool
 def investor_presentation():
+    '''
+    Use this tool to retrieve investor presentations from database and return a text output
+    '''
     pass
 
 
 @function_tool
 def press_release():
+    '''
+    Use this tool to retrieve press releases from database and return a text output
+    '''
+    pass
     pass
 
 
 @function_tool
 def expert_transcripts():
+    '''
+    Use this tool to retrieve expert transcripts from database and return a text output
+    '''
+    pass
     pass
 
 

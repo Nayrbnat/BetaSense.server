@@ -14,6 +14,16 @@ def emit_thinking_process(thinking_process: str):
 
 
 @function_tool
+def emit_finding_summary(finding_summary: str):
+    """
+    Call this tool to emit a summary of findings after using all the tools to gather information.
+
+    Make sure this summary is professional, beautiful, sounds like a star-level analyst, and captures all the key insights you have found using the tools.
+    Any PM should be ultra impressed by your summary! Your objective of calling this tool is to wow them with your deep insights and analysis.
+    """
+    return finding_summary
+
+@function_tool
 def parse_pdf():
     pass
 

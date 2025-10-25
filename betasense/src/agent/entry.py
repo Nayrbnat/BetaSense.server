@@ -31,17 +31,21 @@ from agent.playbooktools import (
     retrieve_perspective_playbook, 
     retrieve_industry_playbook
 )
-from agent.generaltools import emit_thinking_process
+from agent.generaltools import (
+    emit_thinking_process,
+    emit_finding_summary,
+)
 
 
 load_dotenv()
 
 
 agent = Agent(
-    name="Browser agent",
+    name="Financial Analyst Agent",
     instructions=SYSTEM_PROMPT,
     tools=[
         emit_thinking_process,
+        emit_finding_summary,
 
         retrieve_perspective_playbook,
         retrieve_industry_playbook,
@@ -85,14 +89,18 @@ async def run_agent(
                     if event.item.raw_item.name == "emit_thinking_process":
                         args = json.loads(event.item.raw_item.arguments)
                         print("[THINKING PROCESS]: ", args["thinking_process"])
+                    elif event.item.raw_item.name == "emit_finding_summary":
+                        args = json.loads(event.item.raw_item.arguments)
+                        print("[FINDING SUMMARY]: ", args["finding_summary"])
                     else:
                         print("[TOOL CALL]: ", event.item.raw_item.name)
-        return result.final_output
+
+        return
 
 
 # To test only - delete this when front-end is connected
 if __name__ == "__main__":
-    INPUT = "Tell me about Apple's latest 10-K filing - top line revenue?"
+    INPUT = "What about revenue share for different products over the past few years - for different business lines, and give overall analysis"
 
     import asyncio
     session_id = "test-session"

@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 load_dotenv(".env")
 
 
-async def openai_client():
+def openai_client():
     return AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 async def sqlalchemy_client():

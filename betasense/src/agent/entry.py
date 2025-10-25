@@ -78,15 +78,13 @@ async def run_agent(
         )
 
         async for event in result.stream_events():
-            if event.type == "run_item_stream_event" and hasattr(event, 'item'):
-                if event.item.type == "tool_call_item":
-                    args = json.loads(event.item.raw_item.arguments)
-                    print(f"Tool call: {event.item.raw_item.tool_name} with args {args}")
+            print(event) #TODO: Stream with front-end
+
         return result.final_output
     
 
 if __name__ == "__main__":
     import asyncio
     session_id = "test-session"
-    user_input = "Hello!"
+    user_input = "Tell me about Apple's latest 10-K filing - top line revenue?"
     asyncio.run(run_agent(session_id, user_input))

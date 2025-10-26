@@ -1,7 +1,12 @@
+import sys
+from pathlib import Path
+
+# Add parent directory to path so we can import betasense module
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 from fastapi import FastAPI
 from mangum import Mangum
 
-import betasense
 from betasense.src.routes import register_routes
 from betasense.src.middleware.cors import setup_cors
 

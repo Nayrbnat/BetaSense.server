@@ -8,7 +8,7 @@ from agents import function_tool, WebSearchTool
 project_root = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(project_root))
 import betasense
-from auth.clients import openai_client, newsdata_client
+from betasense.src.auth.clients import openai_client, newsdata_client
 
 
 client: AsyncOpenAI = openai_client()

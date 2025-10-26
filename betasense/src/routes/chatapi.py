@@ -9,7 +9,7 @@ from fastapi.responses import StreamingResponse
 project_root = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(project_root))
 import betasense
-from agent.entry import run_agent
+from betasense.src.agent.entry import run_agent
 
 
 router = APIRouter()

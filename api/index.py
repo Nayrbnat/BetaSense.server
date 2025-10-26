@@ -9,7 +9,6 @@ project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
 from fastapi import FastAPI
-from mangum import Mangum
 from betasense.src.routes import register_routes
 from betasense.src.middleware.cors import setup_cors
 
@@ -36,13 +35,10 @@ def read_root():
         }
     }
 
-# Create Mangum handler for AWS Lambda/Vercel compatibility
-_asgi_handler = Mangum(app, lifespan="off")
-
-# Export as 'handler' for Vercel
+# Lazy import Mangum only when handler is called
+# This prevents Vercel's inspection from finding Mangum class
 def handler(event, context):
     """Vercel serverless function handler."""
-    return _asgi_handler(event, context)
-
-# Explicitly define what should be exported
-__all__ = ["handler", "app"]
+    from mangum import Mangum
+    asgi_handler = Mangum(app, lifespan="off")
+    return asgi_handler(event, context)

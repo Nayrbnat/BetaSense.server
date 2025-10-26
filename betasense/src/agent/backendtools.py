@@ -106,11 +106,6 @@ def sell_side_research(search_query: str):
 
 
 @function_tool
-def comps():
-    pass
-
-
-@function_tool
 def insider_transactions(search_query: str):
     """
     Use this tool to retrieve information about insider transactions and return a text output
@@ -123,7 +118,7 @@ def insider_transactions(search_query: str):
 
 
 @function_tool
-def insider_ownership():
+def insider_transactions():
     pass
 
 
@@ -201,5 +196,14 @@ def street_concensus(search_query: str):
     """
     return client.vector_stores.search(
         vector_store_id="vs_68fe11567d348191824dc69adccd6c35",
+        query=search_query
+    )
+
+def supply_chain_analysis(search_query: str):
+    """
+    Use this tool to retrieve supply chain analysis data from various sources and return a text output
+    """
+    return client.vector_stores.search(
+        vector_store_id="vs_68fe123bfcb081919b9c9edb4378e74b",
         query=search_query
     )

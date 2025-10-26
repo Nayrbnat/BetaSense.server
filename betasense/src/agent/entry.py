@@ -123,6 +123,18 @@ async def run_agent(
                         print(output)
                         yield output
                         return
+                    elif event.item.raw_item.name == "control_browser":
+                        args = json.loads(event.item.raw_item.arguments)
+                        output = {
+                            "type": "browser_action",
+                            "content": {
+                                "panel": args["panel"],
+                                "action": args["action"]
+                            },
+                            "tool": "control_browser"
+                        }
+                        print(output)
+                        yield output
                     else:
                         output = {
                             "type": "tool_call",

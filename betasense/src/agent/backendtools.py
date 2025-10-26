@@ -23,11 +23,14 @@ def search_web():
 
 
 @function_tool
-def earnings_transcript():
-    '''
+def earnings_transcript(search_query: str):
+    """
     Use this tool to retrieve earnings transcripts from database and return a text output
-    '''
-    pass
+    """
+    return client.vector_stores.search(
+        vector_store_id="vs_68fe0635411881919e3112029cca1fba",
+        query=search_query
+    )
 
 
 @function_tool
@@ -55,8 +58,14 @@ def expert_transcripts():
 
 
 @function_tool
-def euromonitor():
-    pass
+def euromonitor(search_query: str):
+    """
+    Use this tool to retrieve Euromonitor reports from database and return a text output
+    """
+    return client.vector_stores.search(
+        vector_store_id="vs_68fe0780338c819194a6dd8440c41809",
+        query=search_query
+    )
 
 
 @function_tool

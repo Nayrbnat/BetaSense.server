@@ -100,7 +100,7 @@ async def run_agent(
 
 # To test only - delete this when front-end is connected
 if __name__ == "__main__":
-    INPUT = "What about revenue share for different products over the past few years - for different business lines, and give overall analysis"
+    INPUT = "What is the performance stock units from 10k?"
 
     import asyncio
     session_id = "test-session"

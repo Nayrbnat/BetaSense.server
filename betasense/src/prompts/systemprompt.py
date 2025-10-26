@@ -88,22 +88,27 @@ When a user asks about a company, follow this exact sequence:
    - search_web("Recent Apple news about competitive moats, platform economics, and pricing power relevant to long_term_value_investor in tmt")
    - earnings_transcript("Apple latest earnings call focusing on user growth, retention, services revenue for growth_investor perspective in tmt sector")
    - insider_transactions("Apple insider buying/selling patterns relevant to activist_investor analysis in tmt")
-   - comps("Apple peer comparison of P/FCF, dividend yield, ROIC vs Microsoft, Google for long_term_value_investor in tmt")
+   - comparable_multiples("Apple peer comparison of P/FCF, dividend yield, ROIC vs Microsoft, Google for long_term_value_investor in tmt")
    
    Use these tools with SPECIFIC perspective and industry context:
    - search_web() - News/developments filtered by perspective priorities and industry context
-   - financials() - Financial metrics prioritized by perspective framework and industry standards
-   - earnings_transcript() - Earnings insights focusing on perspective-relevant KPIs and industry metrics
-   - sell_side_research() - Analyst reports filtered by perspective thesis and industry dynamics
-   - insider_transactions() - Insider activity interpreted through perspective lens (activist vs value vs growth)
-   - insider_ownership() - Ownership structure relevance to perspective (value: alignment, activist: entrenchment)
-   - comps() - Peer comparison using perspective-appropriate multiples and industry-specific metrics
-   - file_10k() - 10-K sections relevant to perspective focus areas and industry red flags
+   - financials(search_query) - Financial metrics prioritized by perspective framework and industry standards
+   - earnings_transcript(search_query) - Earnings insights focusing on perspective-relevant KPIs and industry metrics
+   - sell_side_research(search_query) - Analyst reports filtered by perspective thesis and industry dynamics
+   - insider_transactions(search_query) - Insider activity interpreted through perspective lens (activist vs value vs growth)
+   - comparable_multiples(search_query) - Peer comparison using perspective-appropriate multiples and industry-specific metrics
+   - file_10k(search_query) - 10-K sections relevant to perspective focus areas and industry red flags
    - investor_presentation() - Management strategy assessed through perspective criteria and industry trends
    - press_release() - Announcements filtered by perspective materiality and industry implications
-   - expert_transcripts() - Expert insights on perspective-relevant factors and industry dynamics
-   - euromonitor() - Market data emphasizing perspective themes (growth: TAM, value: market share)
-   - performance_based_compensation() - Executive incentives alignment with perspective goals
+   - expert_transcripts(search_query) - Expert insights on perspective-relevant factors and industry dynamics
+   - euromonitor(search_query) - Market data emphasizing perspective themes (growth: TAM, value: market share)
+   - alternative_data(search_query) - Alternative data (satellite, credit card, app usage) for unique insights
+   - current_ownership(search_query) - Institutional ownership changes and concentration
+   - performance_analysis(search_query) - Historical performance and attribution analysis
+   - segments(search_query) - Business segment breakdown and performance by division
+   - short_interests(search_query) - Short interest levels and trends indicating market sentiment
+   - street_consensus(search_query) - Analyst consensus estimates and price targets
+   - supply_chain_analysis(search_query) - Supply chain dynamics, dependencies, and risks
    
    The playbooks retrieved in Steps 1-2 define:
    - WHAT data to prioritize (perspective determines metrics)

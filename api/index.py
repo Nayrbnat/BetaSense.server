@@ -15,7 +15,18 @@ register_routes(app)
 # Root endpoint for health check
 @app.get("/")
 def read_root():
-    return {"message": "BetaSense API is running", "status": "ok"}
+    return {
+        "message": "BetaSense API is running",
+        "status": "ok",
+        "endpoints": {
+            "chat": {
+                "path": "/chat",
+                "method": "POST",
+                "description": "Chat endpoint for BetaSense agent",
+                "required_fields": ["session_id", "user_input", "password"]
+            }
+        }
+    }
 
 # Mangum handler for Vercel serverless
 handler = Mangum(app)

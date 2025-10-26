@@ -11,14 +11,7 @@ sys.path.insert(0, str(project_root))
 import betasense
 from prompts.systemprompt import SYSTEM_PROMPT
 from auth.clients import sqlalchemy_client
-from agent.browsertools import (
-    control_dashboard_layout,
-    update_dashboard_data,
-    highlight_dashboard_element,
-    create_dashboard_alert,
-    execute_dashboard_comparison,
-    reset_dashboards,
-)
+from agent.browsertools import *
 from agent.backendtools import (
     search_web,
     earnings_transcript,
@@ -64,6 +57,7 @@ agent = Agent(
         retrieve_industry_playbook,
         
         search_web,
+        financial_news,
         earnings_transcript,
         investor_presentation,
         press_release,

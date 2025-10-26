@@ -50,7 +50,7 @@ def press_release():
     pass
 
 
-# @function_tool
+@function_tool
 async def financial_news(
     query: str,
     country: str = "us",

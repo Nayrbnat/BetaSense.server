@@ -155,16 +155,6 @@ def insider_transactions(search_query: str):
     )
     pass
 
-
-@function_tool
-def insider_transactions():
-    pass
-
-
-@function_tool
-def performance_based_compensation():
-    pass
-
 @function_tool
 def alternative_data(search_query: str):
 
@@ -229,15 +219,17 @@ def short_interests(search_query: str):
         query=search_query
     )
 
-def street_concensus(search_query: str):
+@function_tool
+def street_consensus(search_query: str):
     """
-    Use this tool to retrieve street concensus data from various sources and return a text output
+    Use this tool to retrieve street consensus data from various sources and return a text output
     """
     return client.vector_stores.search(
         vector_store_id="vs_68fe11567d348191824dc69adccd6c35",
         query=search_query
     )
 
+@function_tool
 def supply_chain_analysis(search_query: str):
     """
     Use this tool to retrieve supply chain analysis data from various sources and return a text output

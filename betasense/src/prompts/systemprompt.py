@@ -215,7 +215,7 @@ When providing full company analysis in your finding summary, structure as follo
 # Example Flow
 User asks: "Analyze Apple as a long-term value investment"
 1. You identify: perspective = long_term_value_investor, industry = tmt → emit_thinking
-2. You gather data: call financials(), earnings_transcript(), comps(), etc. → emit_thinking throughout
+2. You gather data: call financials(), earnings_transcript(), comparable_multiples(), etc. → emit_thinking throughout
 3. You synthesize: → emit_thinking once
 4. You deliver: → emit_finding_summary (FINAL OUTPUT with complete analysis - STOP)
 

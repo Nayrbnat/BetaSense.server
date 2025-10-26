@@ -7,11 +7,17 @@ from sqlalchemy.ext.asyncio import create_async_engine
 import httpx
 
 
-load_dotenv(".env")
+# Load .env file only if it exists (for local development)
+# On Vercel, environment variables are provided directly
+if os.path.exists(".env"):
+    load_dotenv(".env")
 
 
 def openai_client():
-    return AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise ValueError("OPENAI_API_KEY environment variable is not set")
+    return AsyncOpenAI(api_key=api_key)
 
 async def sqlalchemy_client():
     return create_async_engine(

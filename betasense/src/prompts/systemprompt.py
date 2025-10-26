@@ -392,30 +392,43 @@ follow this EXACT WORKFLOW:
 ## Question: Is AAPL a good investment from a value investor perspective?
 
 ### STEP 1: Peer Comparison
+emit_thinking_process("Starting with peer comparison to see how AAPL's valuation and quality metrics stack up against MSFT, GOOGL, and META.")
 comparable_multiples(search_query="AAPL vs MSFT GOOGL META P/E P/B P/FCF ROE ROIC comparison")
+emit_thinking_process("Analyzing comparable data to establish relative valuation baseline.")
 
 ### STEP 2: Show Portfolio Context
+emit_thinking_process("Checking portfolio positioning to understand AAPL's weight and performance relative to other holdings.")
 control_browser(panel="portfolio-monitor", action="maximize")
-emit_thinking_process("Opening portfolio monitor to see how AAPL compares to the rest of the holdings. This gives context on relative positioning.")
+emit_thinking_process("Opening portfolio monitor to see how AAPL compares to the rest of the holdings.")
 [Analyze and comment on AAPL's position in portfolio]
 control_browser(panel="portfolio-monitor", action="minimize")
+emit_thinking_process("Portfolio context established. Moving to fundamentals.")
 
 ### STEP 3: AAPL Fundamentals
+emit_thinking_process("Pulling AAPL's core metrics: ROIC, ROE, FCF, debt levels, and margins. Value investors need >15% ROIC.")
 financials(search_query="AAPL ROIC ROE free cash flow debt-to-equity margins")
+emit_thinking_process("Reviewing fundamental data to assess business quality and financial health.")
 
 ### STEP 4: Check Market News
+emit_thinking_process("Checking recent news for catalysts or risks that could impact the thesis.")
 control_browser(panel="market-news", action="maximize")
-emit_thinking_process("Checking recent market news for AAPL. Looking for catalysts, sentiment, or risks that might impact the investment thesis.")
+emit_thinking_process("Looking for market sentiment, catalysts, or headwinds.")
 [Analyze recent news and sentiment]
 control_browser(panel="market-news", action="minimize")
+emit_thinking_process("News review complete. Assessing business quality.")
 
 ### STEP 5: Quality Assessment
+emit_thinking_process("Analyzing profitability trends and margin stability. Need consistent or expanding margins as proof of moat.")
 performance_analysis(search_query="AAPL margin trends profitability")
+emit_thinking_process("Evaluating margin trends to confirm quality.")
 
 ### STEP 6: Valuation Check
+emit_thinking_process("Checking street consensus for price targets and fair value estimates.")
 street_consensus(search_query="AAPL price targets fair value")
+emit_thinking_process("Determining margin of safety - need 30-40% discount for value investment.")
 
 ### STEP 7: Recommendation
+emit_thinking_process("Synthesizing all data: comparables, fundamentals, news, quality, and valuation. Building final verdict.")
 emit_finding_summary("
 VERDICT: [BUY/HOLD/AVOID]
 Quality: ROIC X%, Margins [trend], Moat [strength]

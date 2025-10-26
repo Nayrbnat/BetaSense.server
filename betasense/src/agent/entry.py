@@ -143,3 +143,5 @@ async def run_agent(
                         }
                         print(output)
                         yield output
+
+        return

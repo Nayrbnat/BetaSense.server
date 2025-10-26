@@ -6,6 +6,8 @@ def setup_cors(app: FastAPI):
     app.add_middleware(
         CORSMiddleware,
         allow_origins=[
+            "https://beta-sense-frontend.vercel.app/",
+
             "http://localhost:1000",
             "http://localhost:2000",
             "http://localhost:3000",

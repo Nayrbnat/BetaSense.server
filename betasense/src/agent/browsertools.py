@@ -106,7 +106,7 @@ def control_dashboard_layout(
     return command
 
 
-@function_tool
+@function_tool(strict_mode=False)
 def update_dashboard_data(
     dashboard: str,
     data_sources: List[str],

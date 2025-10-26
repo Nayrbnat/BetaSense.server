@@ -40,5 +40,13 @@ def read_root():
         }
     }
 
-# Mangum handler for Vercel serverless
-handler = Mangum(app, lifespan="off")
+# Create the Mangum handler - this is what Vercel will call
+_handler = Mangum(app, lifespan="off")
+
+# Vercel serverless function handler
+def handler(event, context):
+    """
+    AWS Lambda / Vercel handler function.
+    This wraps the Mangum handler to ensure compatibility.
+    """
+    return _handler(event, context)

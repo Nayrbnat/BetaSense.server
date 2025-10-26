@@ -8,10 +8,11 @@ from agents import function_tool, WebSearchTool
 project_root = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(project_root))
 import betasense
-from auth.clients import openai_client
+from auth.clients import openai_client, newsdata_client
 
 
 client: AsyncOpenAI = openai_client()
+news_client = newsdata_client()
 
 
 @function_tool
@@ -47,6 +48,44 @@ def press_release():
     Use this tool to retrieve press releases from database and return a text output
     '''
     pass
+
+
+# @function_tool
+async def financial_news(
+    query: str,
+    country: str = "us",
+    category: str = "business",
+    language: str = "en"
+) -> Dict[str, Any]:
+    """
+    Use this tool to retrieve real-time financial news from NewsData.io API.
+    
+    Args:
+        query: Search keywords (e.g., company name, ticker, sector)
+        country: Country code (default: 'us')
+        category: News category - business, top, technology, etc.
+        language: Language code (default: 'en')
+    
+    Returns:
+        Dict containing news articles with title, description, link, pubDate, source
+    
+    Example:
+        financial_news(query="Tesla TSLA", category="business")
+        financial_news(query="Federal Reserve interest rates", country="us")
+    """
+    try:
+        async with news_client["client"] as client:
+            params = {
+                "q": query,
+                "country": country,
+                "category": category,
+                "language": language
+            }
+            response = await client.get(f"{news_client['base_url']}/news", params=params)
+            response.raise_for_status()
+            return response.json()
+    except Exception as e:
+        return {"error": f"Failed to fetch news: {str(e)}"}
 
 
 @function_tool
@@ -95,13 +134,14 @@ def file_10k(search_query: str):
 
 
 @function_tool
-def sell_side_research():
-    pass
-
-
-@function_tool
-def comps():
-    pass
+def sell_side_research(search_query: str):
+    """
+    Use this tool to retrieve sell-side research reports from database and return a text output
+    """
+    return client.vector_stores.search(
+        vector_store_id="vs_68fe0e26b3b481919cb21208b374fd05",
+        query=search_query
+    )
 
 
 @function_tool
@@ -113,16 +153,6 @@ def insider_transactions(search_query: str):
         vector_store_id="vs_68fe087329a481919322505a34a5a681",
         query=search_query
     )
-    pass
-
-
-@function_tool
-def insider_ownership():
-    pass
-
-
-@function_tool
-def performance_based_compensation():
     pass
 
 @function_tool
@@ -148,10 +178,10 @@ def current_ownership(search_query: str):
     )
 
 @function_tool
-def multiples(search_query: str):
+def comparable_multiples(search_query: str):
 
     """
-    Use this tool to retrieve multiples data from various sources and return a text output
+    Use this tool to retrieve comparable multiples data from various sources and return a text output
     """
     return client.vector_stores.search(
         vector_store_id="vs_68fe0c50f6fc8191b0e8c7dda0f4d5d9",
@@ -176,5 +206,35 @@ def segments(search_query: str):
     """
     return client.vector_stores.search(
         vector_store_id="vs_68fe0d2d52a88191ab2c23745f461cde",
+        query=search_query
+    )
+
+@function_tool
+def short_interests(search_query: str):
+    """
+    Use this tool to retrieve short interests data from various sources and return a text output
+    """
+    return client.vector_stores.search(
+        vector_store_id="vs_68fe101b25788191acc9f5ad8b1436c6",
+        query=search_query
+    )
+
+@function_tool
+def street_consensus(search_query: str):
+    """
+    Use this tool to retrieve street consensus data from various sources and return a text output
+    """
+    return client.vector_stores.search(
+        vector_store_id="vs_68fe11567d348191824dc69adccd6c35",
+        query=search_query
+    )
+
+@function_tool
+def supply_chain_analysis(search_query: str):
+    """
+    Use this tool to retrieve supply chain analysis data from various sources and return a text output
+    """
+    return client.vector_stores.search(
+        vector_store_id="vs_68fe123bfcb081919b9c9edb4378e74b",
         query=search_query
     )

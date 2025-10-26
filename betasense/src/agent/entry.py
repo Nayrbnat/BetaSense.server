@@ -22,10 +22,15 @@ from agent.backendtools import (
     financials,
     file_10k,
     sell_side_research,
-    comps,
+    comparable_multiples,
     insider_transactions,
-    insider_ownership,
-    performance_based_compensation,
+    alternative_data,
+    current_ownership,
+    performance_analysis,
+    segments,
+    short_interests,
+    street_consensus,
+    supply_chain_analysis,
 )
 from agent.playbooktools import (
     retrieve_perspective_playbook, 
@@ -59,10 +64,15 @@ agent = Agent(
         financials,
         file_10k,
         sell_side_research,
-        comps,
+        comparable_multiples,
         insider_transactions,
-        insider_ownership,
-        performance_based_compensation,
+        alternative_data,
+        current_ownership,
+        performance_analysis,
+        segments,
+        short_interests,
+        street_consensus,
+        supply_chain_analysis,
     ]
 )
 
@@ -81,7 +91,8 @@ async def run_agent(
         result = Runner.run_streamed(
             starting_agent=agent,
             input=user_input,
-            session=session
+            session=session,
+            max_turns=25,
         )
 
         print("Streaming agent events...")

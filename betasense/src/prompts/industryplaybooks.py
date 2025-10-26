@@ -47,17 +47,82 @@ Telecommunications:
 - Free Cash Flow after CapEx
 - Customer lifetime value vs acquisition costs
 
-Red Flags to Avoid:
-- Decelerating user/revenue growth without clear explanation
-- Rising customer acquisition costs with stagnant retention
-- Technology obsolescence or platform migration risk
-- Concentrated customer base (>10% revenue from single customer)
-- Weak IP protection or easy-to-replicate technology
-- Regulatory threats: antitrust action, data privacy violations
-- Security breaches or data leaks
-- Excessive customer churn indicating product-market fit issues
-- Unsustainable content spending (media companies)
-- Deteriorating network quality metrics (telecom)
+Red Flags Framework - Structured Pattern Recognition:
+
+GROWTH QUALITY RED FLAGS (High-Multiple Failure Patterns):
+🚨 Deceleration Without Reacceleration:
+   Signal: Revenue/user growth slowing 2+ consecutive quarters
+   Validation: Check if cohort retention deteriorating (not just tough comps)
+   Historical Cases: Peloton, DocuSign - pandemic pull-forward mistaken for sustainable growth
+   Action: Stress test - if growth doesn't reaccelerate, is valuation justified at mature rates?
+
+🚨 CAC Inflation Spiral:
+   Signal: CAC rising >15% YoY while LTV/CAC compresses below 3x
+   Validation: Check channel concentration - growth dependent on single degrading channel?
+   Historical Cases: Blue Apron - Facebook CPMs rose 40% while conversion collapsed
+   Action: Model worst case - can company grow profitably if CAC doubles?
+
+🚨 Cohort Degradation:
+   Signal: Newer customer cohorts show worse retention/monetization than earlier cohorts
+   Validation: Demand cohort curves by vintage - flattening/declining = death spiral
+   Historical Cases: Stitch Fix, Robinhood - later users were tourists, not believers
+   Action: If company won't share cohort data, assume it's bad news
+
+🚨 Engagement Collapse:
+   Signal: MAU/DAU declining, session frequency dropping, power user churn rising
+   Validation: Distinguish habitual usage from episodic/promotional usage
+   Historical Cases: Robinhood - users were mercenary volatility chasers, not engaged investors
+   Action: Require DAU/WAU/MAU disclosure. Non-daily habits = fragile retention
+
+COMPETITIVE MOAT RED FLAGS:
+🚨 AI Theater (No Measurable Learning):
+   Signal: Claims "AI-powered" but can't demonstrate accuracy improvement metrics
+   Validation: Ask - What's prediction accuracy? How has it improved QoQ? Where's compound learning?
+   Historical Cases: Stitch Fix, Zillow Offers - algorithms never beat humans/baseline meaningfully
+   Action: If AI is core thesis but metrics don't improve, it's marketing not moat
+
+🚨 Foundation Model Disruption Risk:
+   Signal: Core product replicable by ChatGPT/Claude/Gemini for free
+   Validation: Test using GPT-4 to replicate core workflow - if possible = existential threat
+   Historical Cases: Chegg - ChatGPT provided superior homework help at zero cost
+   Action: Identify revenue streams defenseless against LLMs, underwrite decline scenario
+
+🚨 Bundling Vulnerability:
+   Signal: Product is feature-sized, platform giants could bundle for free
+   Validation: Check if Microsoft/Google/Adobe roadmap mentions this category
+   Historical Cases: DocuSign - Microsoft/Adobe added e-signature to Office/Acrobat
+   Action: If solving narrow job-to-be-done, assume platform bundling within 24 months
+
+🚨 Zero Switching Costs:
+   Signal: Customers can migrate to competitor in <1 week with no data/workflow loss
+   Validation: Ask customers - what would it take to switch? If "nothing" = no moat
+   Historical Cases: Blue Apron - customers rotated freely between meal kit providers
+   Action: Quantify switching costs in time/money. If <$10K and <1 month = commoditized
+
+BUSINESS MODEL RED FLAGS:
+🚨 Revenue Concentration with Existential Risk:
+   Signal: >30% revenue from single stream facing regulatory/technology disruption
+   Validation: Model scenario - what if regulators ban or new tech eliminates this stream?
+   Historical Cases: Robinhood - 75% PFOF (regulatory), 30% crypto (cyclical volatility)
+   Action: If concentrated revenue is high-margin AND at-risk, model zero scenario
+
+🚨 Unit Economics Mirage:
+   Signal: Improving unit economics claimed but driven by accounting tricks not reality
+   Validation: Check if improvements from: longer payback assumptions, reduced support allocation, or marketing timing games
+   Historical Cases: WeWork - "community-adjusted EBITDA" excluded actual costs
+   Action: Recalculate unit economics using conservative assumptions, cash basis only
+
+🚨 Technology Obsolescence Path:
+   Signal: Core technology stack approaching end-of-lifecycle with migration risk
+   Validation: Check technology roadmap - is platform modernization required? Migration risk to customers?
+   Historical Cases: Legacy on-premise software unable to transition to cloud economics
+   Action: Assess technology debt - if major replatforming needed, model 2-3 year revenue headwind
+
+🚨 Security/Data Breach Pattern:
+   Signal: Multiple security incidents or one major breach with customer data exposure
+   Validation: Check customer trust metrics, churn spike post-incident, regulatory exposure
+   Historical Cases: Various cybersecurity failures leading to customer exodus and regulatory fines
+   Action: Major breach = 12-24 month cloud over growth, quantify customer acquisition headwind
 
 Technology Sub-Sectors:
 

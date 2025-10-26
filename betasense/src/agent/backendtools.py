@@ -135,3 +135,46 @@ def alternative_data(search_query: str):
         vector_store_id="vs_68fe06aeda788191a2394128ccd5cb52",
         query=search_query
     )
+
+@function_tool
+def current_ownership(search_query: str):
+
+    """
+    Use this tool to retrieve current ownership data from various sources and return a text output
+    """
+    return client.vector_stores.search(
+        vector_store_id="vs_68fe09ea23648191967b7ae1b5aad61f",
+        query=search_query
+    )
+
+@function_tool
+def multiples(search_query: str):
+
+    """
+    Use this tool to retrieve multiples data from various sources and return a text output
+    """
+    return client.vector_stores.search(
+        vector_store_id="vs_68fe0c50f6fc8191b0e8c7dda0f4d5d9",
+        query=search_query
+    )
+
+@function_tool
+def performance_analysis(search_query: str):
+    """
+    Use this tool to retrieve performance analysis data from various sources and return a text output
+    """
+    return client.vector_stores.search(
+        vector_store_id="vs_68fe0ccd276881918cfb1ea66e7f1a0c",
+        query=search_query
+    )  
+
+
+@function_tool
+def segments(search_query: str):
+    """
+    Use this tool to retrieve segments data from various sources and return a text output
+    """
+    return client.vector_stores.search(
+        vector_store_id="vs_68fe0d2d52a88191ab2c23745f461cde",
+        query=search_query
+    )

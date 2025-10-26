@@ -95,8 +95,14 @@ def file_10k(search_query: str):
 
 
 @function_tool
-def sell_side_research():
-    pass
+def sell_side_research(search_query: str):
+    """
+    Use this tool to retrieve sell-side research reports from database and return a text output
+    """
+    return client.vector_stores.search(
+        vector_store_id="vs_68fe0e26b3b481919cb21208b374fd05",
+        query=search_query
+    )
 
 
 @function_tool
@@ -148,10 +154,10 @@ def current_ownership(search_query: str):
     )
 
 @function_tool
-def multiples(search_query: str):
+def comparable_multiples(search_query: str):
 
     """
-    Use this tool to retrieve multiples data from various sources and return a text output
+    Use this tool to retrieve comparable multiples data from various sources and return a text output
     """
     return client.vector_stores.search(
         vector_store_id="vs_68fe0c50f6fc8191b0e8c7dda0f4d5d9",
@@ -176,5 +182,24 @@ def segments(search_query: str):
     """
     return client.vector_stores.search(
         vector_store_id="vs_68fe0d2d52a88191ab2c23745f461cde",
+        query=search_query
+    )
+
+@function_tool
+def short_interests(search_query: str):
+    """
+    Use this tool to retrieve short interests data from various sources and return a text output
+    """
+    return client.vector_stores.search(
+        vector_store_id="vs_68fe101b25788191acc9f5ad8b1436c6",
+        query=search_query
+    )
+
+def street_concensus(search_query: str):
+    """
+    Use this tool to retrieve street concensus data from various sources and return a text output
+    """
+    return client.vector_stores.search(
+        vector_store_id="vs_68fe11567d348191824dc69adccd6c35",
         query=search_query
     )

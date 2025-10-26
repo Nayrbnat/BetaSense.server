@@ -1,19 +1,15 @@
+"""
+BetaSense API - Vercel Serverless Entry Point
+"""
 import sys
-import os
 from pathlib import Path
 
 # Add parent directory to path so we can import betasense module
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-# Also add the betasense directory itself
-betasense_path = project_root / "betasense"
-if betasense_path.exists():
-    sys.path.insert(0, str(betasense_path))
-
 from fastapi import FastAPI
 from mangum import Mangum
-
 from betasense.src.routes import register_routes
 from betasense.src.middleware.cors import setup_cors
 
@@ -40,13 +36,13 @@ def read_root():
         }
     }
 
-# Create the Mangum handler - this is what Vercel will call
-_handler = Mangum(app, lifespan="off")
+# Create Mangum handler for AWS Lambda/Vercel compatibility
+_asgi_handler = Mangum(app, lifespan="off")
 
-# Vercel serverless function handler
+# Export as 'handler' for Vercel
 def handler(event, context):
-    """
-    AWS Lambda / Vercel handler function.
-    This wraps the Mangum handler to ensure compatibility.
-    """
-    return _handler(event, context)
+    """Vercel serverless function handler."""
+    return _asgi_handler(event, context)
+
+# Explicitly define what should be exported
+__all__ = ["handler", "app"]

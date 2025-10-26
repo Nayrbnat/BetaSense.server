@@ -13,15 +13,16 @@ import betasense
 # Dashboard Types
 class DashboardType(str, Enum):
     PRICE_CHART = "price_chart"
-    NEWS_FEED = "news_feed"
-    SHORT_INTEREST = "short_interest"
-    FINANCIALS = "financials"
-    VALUATION = "valuation"
-    SENTIMENT = "sentiment"
+    PORTFOLIO_MONITORING = "portfolio_monitoring"
+    MARKET_NEWS = "market_news"
+    INDICES = "indices"
+    COMPARABLES = "comparables"
+    DOCUMENT_LIBRARY = "document_library"
 
 
 # Layout Modes
 class LayoutMode(str, Enum):
+    CUSTOM = "custom"                # Custom positioning and sizing
     MAXIMIZED = "maximized"          # Single dashboard fills entire screen
     GRID_2X2 = "grid_2x2"            # 4 dashboards in 2x2 grid
     GRID_1X2 = "grid_1x2"            # 2 dashboards side by side
@@ -33,17 +34,17 @@ class LayoutMode(str, Enum):
 @function_tool
 def control_dashboard_layout(
     layout_mode: str,
-    primary_dashboard: str,
-    secondary_dashboards: Optional[List[str]] = None,
+    dashboards: List[Dict[str, Any]],
     ticker: Optional[str] = None
 ) -> Dict[str, Any]:
     """
-    Control the frontend dashboard layout and configure which dashboards to display.
+    Control the frontend dashboard layout with precise control over positioning, sizing, and visibility.
     
-    This is the PRIMARY tool for managing screen real estate and dashboard visibility.
+    This is the PRIMARY tool for managing screen real estate and dashboard configuration.
     
     Args:
         layout_mode: How to arrange dashboards on screen
+            - "custom": Custom positioning with explicit x, y, width, height for each dashboard
             - "maximized": Single dashboard fills entire screen
             - "grid_2x2": 4 dashboards in 2x2 grid  
             - "grid_1x2": 2 dashboards side by side
@@ -51,16 +52,28 @@ def control_dashboard_layout(
             - "grid_3x2": All 6 dashboards visible
             - "pip": Picture-in-picture (one large, one small overlay)
             
-        primary_dashboard: The main/first dashboard to display
-            - "price_chart": Stock price and technical analysis
-            - "news_feed": Latest news and press releases
-            - "short_interest": Short interest and borrow data
-            - "financials": Financial statements and metrics
-            - "valuation": Valuation multiples and comparisons
-            - "sentiment": Social sentiment and analyst ratings
+        dashboards: List of dashboard configurations. Each dashboard dict contains:
+            - "type" (required): Dashboard type
+                - "price_chart": Stock price and volume analysis
+                - "portfolio_monitoring": Portfolio performance and holdings tracking
+                - "market_news": Latest market news and press releases
+                - "indices": Major indices and sector performance
+                - "comparables": Peer comparison and relative metrics
+                - "document_library": Research documents and filings
             
-        secondary_dashboards: Additional dashboards to show (for multi-dashboard layouts)
-            List of dashboard names from above options
+            - "position" (optional for custom mode): {"x": int, "y": int}
+                - x: Horizontal position in pixels from left edge
+                - y: Vertical position in pixels from top edge
+                
+            - "size" (optional for custom mode): {"width": int|str, "height": int|str}
+                - width: Dashboard width (pixels as int, or percentage as "50%")
+                - height: Dashboard height (pixels as int, or percentage as "50%")
+                
+            - "z_index" (optional): Stacking order (higher = on top)
+            
+            - "data_sources" (optional): List of data sources to load immediately
+            - "timeframe" (optional): Time period for data (e.g., "1D", "1M", "1Y")
+            - "filters" (optional): Additional filters/parameters
             
         ticker: Stock ticker symbol to focus on (e.g., "AAPL", "TSLA")
     
@@ -71,24 +84,83 @@ def control_dashboard_layout(
         # Maximize price chart for AAPL
         control_dashboard_layout(
             layout_mode="maximized",
-            primary_dashboard="price_chart", 
+            dashboards=[
+                {
+                    "type": "price_chart",
+                    "data_sources": ["price_data", "volume"],
+                    "timeframe": "6M"
+                }
+            ],
             ticker="AAPL"
         )
         
-        # Show price chart + news side by side
+        # Show price chart + news side by side (grid layout)
         control_dashboard_layout(
             layout_mode="grid_1x2",
-            primary_dashboard="price_chart",
-            secondary_dashboards=["news_feed"],
+            dashboards=[
+                {
+                    "type": "price_chart",
+                    "data_sources": ["price_data", "volume"]
+                },
+                {
+                    "type": "market_news",
+                    "data_sources": ["company_news", "earnings_releases"]
+                }
+            ],
             ticker="TSLA"
         )
         
-        # Show all 6 dashboards
+        # Custom layout with precise positioning and sizing
         control_dashboard_layout(
-            layout_mode="grid_3x2",
-            primary_dashboard="price_chart",
-            secondary_dashboards=["news_feed", "short_interest", "financials", "valuation", "sentiment"],
+            layout_mode="custom",
+            dashboards=[
+                {
+                    "type": "price_chart",
+                    "position": {"x": 0, "y": 0},
+                    "size": {"width": "70%", "height": "60%"},
+                    "z_index": 1,
+                    "data_sources": ["price_data", "volume"],
+                    "timeframe": "1M"
+                },
+                {
+                    "type": "market_news",
+                    "position": {"x": "70%", "y": 0},
+                    "size": {"width": "30%", "height": "60%"},
+                    "z_index": 1,
+                    "data_sources": ["company_news"]
+                },
+                {
+                    "type": "indices",
+                    "position": {"x": 0, "y": "60%"},
+                    "size": {"width": "50%", "height": "40%"},
+                    "z_index": 1
+                },
+                {
+                    "type": "comparables",
+                    "position": {"x": "50%", "y": "60%"},
+                    "size": {"width": "50%", "height": "40%"},
+                    "z_index": 1
+                }
+            ],
             ticker="NVDA"
+        )
+        
+        # Picture-in-picture with main chart and small news overlay
+        control_dashboard_layout(
+            layout_mode="pip",
+            dashboards=[
+                {
+                    "type": "price_chart",
+                    "data_sources": ["price_data", "volume"]
+                },
+                {
+                    "type": "market_news",
+                    "position": {"x": "75%", "y": "75%"},
+                    "size": {"width": "20%", "height": "20%"},
+                    "z_index": 10
+                }
+            ],
+            ticker="AAPL"
         )
     """
     
@@ -96,8 +168,7 @@ def control_dashboard_layout(
         "action": "set_layout",
         "layout": {
             "mode": layout_mode,
-            "primary_dashboard": primary_dashboard,
-            "secondary_dashboards": secondary_dashboards or [],
+            "dashboards": dashboards,
             "ticker": ticker
         },
         "timestamp": "{{ timestamp }}"
@@ -106,7 +177,7 @@ def control_dashboard_layout(
     return command
 
 
-@function_tool(strict_mode=False)
+@function_tool
 def update_dashboard_data(
     dashboard: str,
     data_sources: List[str],
@@ -193,7 +264,7 @@ def highlight_dashboard_element(
             - "metric": A key metric or KPI
             - "news_item": Specific news article
             - "data_row": Row in a table/grid
-            - "indicator": Technical indicator signal
+            - "price_level": Significant price level or event
             
         element_id: Identifier for the specific element
         annotation: Optional text to display near the highlight
@@ -207,7 +278,7 @@ def highlight_dashboard_element(
             dashboard="price_chart",
             element_type="chart_point",
             element_id="2024-10-15_spike",
-            annotation="Unusual volume - 3x average"
+            annotation="Unusual volume - check market_news for catalyst"
         )
     """
     
@@ -262,12 +333,12 @@ def create_dashboard_alert(
         JSON command to display alert
         
     Example:
-        # Alert about high short interest
+        # Alert about significant market move
         create_dashboard_alert(
             alert_type="warning",
-            message="Short interest increased 45% in last 2 weeks - potential squeeze risk",
+            message="Major index volatility detected - S&P 500 down 3% intraday",
             severity="warning",
-            dashboard="short_interest"
+            dashboard="indices"
         )
     """
     
@@ -306,8 +377,8 @@ def execute_dashboard_comparison(
         comparison_type: Type of comparison
             - "price_performance": Price chart overlay
             - "fundamentals": Financial metrics comparison
-            - "valuation": Valuation multiples comparison
-            - "sentiment": Sentiment scores comparison
+            - "peer_analysis": Comparative peer analysis
+            - "market_position": Market positioning comparison
             
         metrics: Specific metrics to compare (varies by comparison_type)
         timeframe: Time period for comparison
@@ -316,11 +387,11 @@ def execute_dashboard_comparison(
         JSON command to set up comparison view
         
     Example:
-        # Compare AAPL vs competitors on valuation
+        # Compare AAPL vs competitors on peer analysis
         execute_dashboard_comparison(
             ticker_primary="AAPL",
             tickers_compare=["MSFT", "GOOGL", "META"],
-            comparison_type="valuation",
+            comparison_type="peer_analysis",
             metrics=["P/E", "P/S", "EV/EBITDA", "PEG"],
             timeframe="1Y"
         )
@@ -360,55 +431,56 @@ def reset_dashboards() -> Dict[str, Any]:
     return command
 
 
-# Example workflow function (not a tool, just for documentation)
-def example_aapl_analysis_workflow():
-    """
-    Example workflow for: "Is AAPL a good investment now?"
+# # Example workflow function (not a tool, just for documentation)
+# """'''
+#     Example workflow for: "Is AAPL a good investment now?"
     
-    Step 1: Maximize price chart
-    control_dashboard_layout(
-        layout_mode="maximized",
-        primary_dashboard="price_chart",
-        ticker="AAPL"
-    )
+#     Step 1: Set up comprehensive view with price chart, news, and indices
+#     control_dashboard_layout(
+#         layout_mode="custom",
+#         dashboards=[
+#             {
+#                 "type": "price_chart",
+#                 "position": {"x": 0, "y": 0},
+#                 "size": {"width": "70%", "height": "60%"},
+#                 "data_sources": ["price_data", "volume"],
+#                 "timeframe": "6M"
+#             },
+#             {
+#                 "type": "market_news",
+#                 "position": {"x": "70%", "y": 0},
+#                 "size": {"width": "30%", "height": "60%"},
+#                 "data_sources": ["company_news", "earnings_releases", "analyst_reports"],
+#                 "timeframe": "1M"
+#             },
+#             {
+#                 "type": "indices",
+#                 "position": {"x": 0, "y": "60%"},
+#                 "size": {"width": "100%", "height": "40%"},
+#                 "data_sources": ["major_indices", "sector_performance", "market_breadth"],
+#                 "timeframe": "3M"
+#             }
+#         ],
+#         ticker="AAPL"
+#     )
     
-    Step 2: Load price data with technical indicators
-    update_dashboard_data(
-        dashboard="price_chart",
-        data_sources=["price_data", "volume", "technical_indicators", "options_flow"],
-        ticker="AAPL",
-        timeframe="6M"
-    )
+#     Step 2: If price dip detected, use financial_news() to identify catalyst
+#     news_results = financial_news(query="Apple AAPL", category="business")
+#     # Analyze news for negative sentiment, product issues, regulatory concerns, etc.
     
-    Step 3: Switch to multi-dashboard view with news and short interest
-    control_dashboard_layout(
-        layout_mode="grid_1x2",
-        primary_dashboard="news_feed",
-        secondary_dashboards=["short_interest"],
-        ticker="AAPL"
-    )
+#     Step 3: Highlight the price drop and reference news
+#     highlight_dashboard_element(
+#         dashboard="price_chart",
+#         element_type="chart_point",
+#         element_id="price_drop_oct_20",
+#         annotation="5% drop - see market_news for iPhone production delays"
+#     )
     
-    Step 4: Load news data
-    update_dashboard_data(
-        dashboard="news_feed",
-        data_sources=["company_news", "earnings_releases", "analyst_reports"],
-        ticker="AAPL",
-        timeframe="1M"
-    )
-    
-    Step 5: Load short interest data
-    update_dashboard_data(
-        dashboard="short_interest",
-        data_sources=["short_volume", "borrow_rate", "days_to_cover"],
-        ticker="AAPL",
-        timeframe="3M"
-    )
-    
-    Step 6: Create alert if any concerning findings
-    create_dashboard_alert(
-        alert_type="insight",
-        message="AAPL showing strong technical support at $165. Recent news positive on Services growth.",
-        severity="success"
-    )
-    """
-    pass
+#     Step 4: Create alert with news-based findings
+#     create_dashboard_alert(
+#         alert_type="insight",
+#         message="AAPL down 5% on news of iPhone production delays in China. Analyst downgrades citing supply chain risks.",
+#         severity="warning"
+#     )
+# """
+#  pass

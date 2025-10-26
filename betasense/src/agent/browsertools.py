@@ -10,6 +10,18 @@ sys.path.insert(0, str(project_root))
 import betasense
 
 
+@function_tool
+async def control_browser(panel: str, action: str):
+    """
+    panel: one of "price-chart", "portfolio-monitor", "market-news", "indices", "comparables", "document-library"
+    action: one of "maximize", "minimize"
+    """
+    return {
+        "panel": panel,
+        "action": action
+    }
+
+
 # # Dashboard Types
 # class DashboardType(str, Enum):
 #     PRICE_CHART = "price_chart"

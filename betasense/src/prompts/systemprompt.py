@@ -439,6 +439,7 @@ When a user asks about a company, follow this exact sequence:
    
    Use these tools with SPECIFIC perspective and industry context:
    - search_web() - News/developments filtered by perspective priorities and industry context
+   - financial_news(query, country, category, language) - Real-time financial news from NewsData.io API for catalyst identification
    - financials(search_query) - Financial metrics prioritized by perspective framework and industry standards
    - earnings_transcript(search_query) - Earnings insights focusing on perspective-relevant KPIs and industry metrics
    - sell_side_research(search_query) - Analyst reports filtered by perspective thesis and industry dynamics

@@ -241,6 +241,74 @@ def control_dashboard_layout(
 
 
 @function_tool
+def update_dashboard_data(
+    dashboard: str,
+    data_sources: List[str],
+    ticker: str,
+    timeframe: Optional[str] = "1D",
+    filters: Optional[Dict[str, Any]] = None
+) -> Dict[str, Any]:
+    """
+    Update specific dashboard with new data from selected sources.
+    
+    Use this to refresh dashboard content or change what data is displayed.
+    
+    Args:
+        dashboard: Which dashboard to update
+            - "price_chart", "news_feed", "short_interest", "financials", "valuation", "sentiment"
+            
+        data_sources: Which data sources to pull from
+            For price_chart: ["price_data", "volume", "technical_indicators", "options_flow"]
+            For news_feed: ["company_news", "sector_news", "earnings_releases", "analyst_reports"]
+            For short_interest: ["short_volume", "borrow_rate", "days_to_cover", "institutional_positions"]
+            For financials: ["income_statement", "balance_sheet", "cash_flow", "key_metrics"]
+            For valuation: ["multiples", "dcf", "comps", "sum_of_parts"]
+            For sentiment: ["social_sentiment", "analyst_ratings", "insider_trading", "institutional_flow"]
+            
+        ticker: Stock ticker symbol
+        
+        timeframe: Time period for data
+            - "1D", "5D", "1M", "3M", "6M", "YTD", "1Y", "5Y", "MAX"
+            
+        filters: Additional filters/parameters specific to dashboard type
+    
+    Returns:
+        JSON command to update dashboard data
+        
+    Example:
+        # Load AAPL price chart with technical indicators
+        update_dashboard_data(
+            dashboard="price_chart",
+            data_sources=["price_data", "volume", "technical_indicators"],
+            ticker="AAPL",
+            timeframe="1M"
+        )
+        
+        # Load latest news for Tesla
+        update_dashboard_data(
+            dashboard="news_feed",
+            data_sources=["company_news", "earnings_releases"],
+            ticker="TSLA",
+            timeframe="1M"
+        )
+    """
+    
+    command = {
+        "action": "update_data",
+        "dashboard": dashboard,
+        "config": {
+            "data_sources": data_sources,
+            "ticker": ticker,
+            "timeframe": timeframe,
+            "filters": filters or {}
+        },
+        "timestamp": "{{ timestamp }}"
+    }
+    
+    return command
+
+
+@function_tool
 def highlight_dashboard_element(
     dashboard: str,
     element_type: str,

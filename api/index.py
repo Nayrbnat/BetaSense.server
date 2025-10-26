@@ -1,19 +1,20 @@
 """
 BetaSense API - Vercel Serverless Entry Point
 """
-import sys
-from pathlib import Path
+import sys as _sys
+from pathlib import Path as _Path
 
 # Add parent directory to path so we can import betasense module
-project_root = Path(__file__).parent.parent
-sys.path.insert(0, str(project_root))
+_project_root = _Path(__file__).parent.parent
+_sys.path.insert(0, str(_project_root))
 
-from fastapi import FastAPI
+# Import FastAPI and setup app
+from fastapi import FastAPI as _FastAPI
 from betasense.src.routes import register_routes
 from betasense.src.middleware.cors import setup_cors
 
 # Create FastAPI app
-app = FastAPI(title="BetaSense API", version="1.0.0")
+app = _FastAPI(title="BetaSense API", version="1.0.0")
 
 # Setup CORS and routes
 setup_cors(app)

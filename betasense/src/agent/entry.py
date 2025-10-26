@@ -76,6 +76,7 @@ async def run_agent(
             engine=engine,
             session_id=session_id,
         )
+    
     with trace(workflow_name=f"betasense-agent-{session_id}"):
         result = Runner.run_streamed(
             starting_agent=agent,
@@ -83,26 +84,35 @@ async def run_agent(
             session=session
         )
 
+        print("Streaming agent events...")
+
         async for event in result.stream_events():
             if event.type == "run_item_stream_event" and hasattr(event, 'item'):
                 if event.item.type == "tool_call_item":
                     if event.item.raw_item.name == "emit_thinking_process":
                         args = json.loads(event.item.raw_item.arguments)
-                        print("[THINKING PROCESS]: ", args["thinking_process"])
+                        output = {
+                            "type": "thinking",
+                            "content": args["thinking_process"],
+                            "tool": "emit_thinking_process"
+                        }
+                        print(output)
+                        yield output
                     elif event.item.raw_item.name == "emit_finding_summary":
                         args = json.loads(event.item.raw_item.arguments)
-                        print("[FINDING SUMMARY]: ", args["finding_summary"])
+                        output = {
+                            "type": "finding",
+                            "content": args["finding_summary"],
+                            "tool": "emit_finding_summary"
+                        }
+                        print(output)
+                        yield output
+                        return
                     else:
-                        print("[TOOL CALL]: ", event.item.raw_item.name)
-
-        return
-
-
-# To test only - delete this when front-end is connected
-if __name__ == "__main__":
-    INPUT = "What is the performance stock units from 10k?"
-
-    import asyncio
-    session_id = "test-session"
-    user_input = INPUT
-    asyncio.run(run_agent(session_id, user_input))
+                        output = {
+                            "type": "tool_call",
+                            "content": event.item.raw_item.name,
+                            "tool": event.item.raw_item.name
+                        }
+                        print(output)
+                        yield output

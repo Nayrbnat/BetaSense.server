@@ -13,7 +13,7 @@ import betasense
 # Dashboard Types
 class DashboardType(str, Enum):
     PRICE_CHART = "price_chart"
-    PORTFOLIO_MONITORING = "portfolio_monitoring"
+    PORTFOLIO_MONITOR = "portfolio_monitor"
     MARKET_NEWS = "market_news"
     INDICES = "indices"
     COMPARABLES = "comparables"
@@ -23,19 +23,22 @@ class DashboardType(str, Enum):
 # Layout Modes
 class LayoutMode(str, Enum):
     CUSTOM = "custom"                # Custom positioning and sizing
-    MAXIMIZED = "maximized"          # Single dashboard fills entire screen
-    GRID_2X2 = "grid_2x2"            # 4 dashboards in 2x2 grid
-    GRID_1X2 = "grid_1x2"            # 2 dashboards side by side
-    GRID_2X1 = "grid_2x1"            # 2 dashboards stacked vertically
-    GRID_3X2 = "grid_3x2"            # 6 dashboards in 3x2 grid
+    MAXIMIZED = "maximized"          # Single paneltype fills entire screen
+    GRID_2X2 = "grid_2x2"            # 4 paneltype in 2x2 grid
+    GRID_1X2 = "grid_1x2"            # 2 paneltype side by side
+    GRID_2X1 = "grid_2x1"            # 2 paneltype stacked vertically
+    GRID_3X2 = "grid_3x2"            # 6 paneltype in 3x2 grid
     PICTURE_IN_PICTURE = "pip"       # One large + one small overlay
 
 
 @function_tool
 def control_dashboard_layout(
     layout_mode: str,
-    dashboards: List[Dict[str, Any]],
-    ticker: Optional[str] = None
+    paneltype: List[Dict[str, Any]],
+    ticker: Optional[str] = None,
+    minimize: Optional[List[str]] = None,
+    maximize: Optional[str] = None,
+    zoom: Optional[float] = None
 ) -> Dict[str, Any]:
     """
     Control the frontend dashboard layout with precise control over positioning, sizing, and visibility.
@@ -43,19 +46,19 @@ def control_dashboard_layout(
     This is the PRIMARY tool for managing screen real estate and dashboard configuration.
     
     Args:
-        layout_mode: How to arrange dashboards on screen
-            - "custom": Custom positioning with explicit x, y, width, height for each dashboard
-            - "maximized": Single dashboard fills entire screen
-            - "grid_2x2": 4 dashboards in 2x2 grid  
-            - "grid_1x2": 2 dashboards side by side
-            - "grid_2x1": 2 dashboards stacked vertically
-            - "grid_3x2": All 6 dashboards visible
+        layout_mode: How to arrange paneltype on screen
+            - "custom": Custom positioning with explicit x, y, width, height for each paneltype
+            - "maximized": Single paneltype fills entire screen
+            - "grid_2x2": 4 paneltype in 2x2 grid  
+            - "grid_1x2": 2 paneltype side by side
+            - "grid_2x1": 2 paneltype stacked vertically
+            - "grid_3x2": All 6 paneltype visible
             - "pip": Picture-in-picture (one large, one small overlay)
             
-        dashboards: List of dashboard configurations. Each dashboard dict contains:
+        paneltype: List of dashboard configurations. Each dashboard dict contains:
             - "type" (required): Dashboard type
                 - "price_chart": Stock price and volume analysis
-                - "portfolio_monitoring": Portfolio performance and holdings tracking
+                - "portfolio_monitor": Portfolio performance and holdings tracking
                 - "market_news": Latest market news and press releases
                 - "indices": Major indices and sector performance
                 - "comparables": Peer comparison and relative metrics
@@ -76,6 +79,19 @@ def control_dashboard_layout(
             - "filters" (optional): Additional filters/parameters
             
         ticker: Stock ticker symbol to focus on (e.g., "AAPL", "TSLA")
+        
+        minimize: List of dashboard types to minimize to taskbar/dock
+            - Example: ["indices", "document_library"]
+            - Minimized dashboards remain accessible but hidden from view
+            
+        maximize: Single dashboard type to maximize (overrides layout_mode if provided)
+            - Example: "price_chart"
+            - When set, this dashboard fills the entire screen
+            
+        zoom: Zoom level for all dashboards (0.5 to 2.0)
+            - 1.0 = 100% (default)
+            - 0.75 = 75% zoom out (see more content)
+            - 1.5 = 150% zoom in (larger text/charts)
     
     Returns:
         JSON command for frontend to execute layout change
@@ -84,7 +100,7 @@ def control_dashboard_layout(
         # Maximize price chart for AAPL
         control_dashboard_layout(
             layout_mode="maximized",
-            dashboards=[
+            paneltype=[
                 {
                     "type": "price_chart",
                     "data_sources": ["price_data", "volume"],
@@ -97,7 +113,7 @@ def control_dashboard_layout(
         # Show price chart + news side by side (grid layout)
         control_dashboard_layout(
             layout_mode="grid_1x2",
-            dashboards=[
+            paneltype=[
                 {
                     "type": "price_chart",
                     "data_sources": ["price_data", "volume"]
@@ -113,7 +129,7 @@ def control_dashboard_layout(
         # Custom layout with precise positioning and sizing
         control_dashboard_layout(
             layout_mode="custom",
-            dashboards=[
+            paneltype=[
                 {
                     "type": "price_chart",
                     "position": {"x": 0, "y": 0},
@@ -148,7 +164,7 @@ def control_dashboard_layout(
         # Picture-in-picture with main chart and small news overlay
         control_dashboard_layout(
             layout_mode="pip",
-            dashboards=[
+            paneltype=[
                 {
                     "type": "price_chart",
                     "data_sources": ["price_data", "volume"]
@@ -162,14 +178,61 @@ def control_dashboard_layout(
             ],
             ticker="AAPL"
         )
+        
+        # Maximize a specific dashboard (overrides layout_mode)
+        control_dashboard_layout(
+            layout_mode="custom",
+            paneltype=[
+                {"type": "price_chart"},
+                {"type": "market_news"},
+                {"type": "comparables"}
+            ],
+            ticker="TSLA",
+            maximize="price_chart"  # This dashboard fills the screen
+        )
+        
+        # Minimize less important dashboards to declutter
+        control_dashboard_layout(
+            layout_mode="grid_2x2",
+            paneltype=[
+                {"type": "price_chart"},
+                {"type": "market_news"},
+                {"type": "comparables"},
+                {"type": "indices"}
+            ],
+            ticker="NVDA",
+            minimize=["indices", "document_library"]  # Hide these for now
+        )
+        
+        # Zoom out to see more data at once
+        control_dashboard_layout(
+            layout_mode="grid_1x2",
+            paneltype=[
+                {"type": "price_chart"},
+                {"type": "comparables"}
+            ],
+            ticker="AAPL",
+            zoom=0.75  # 75% zoom - fit more information on screen
+        )
+        
+        # Zoom in for presentation/readability
+        control_dashboard_layout(
+            layout_mode="maximized",
+            paneltype=[{"type": "price_chart"}],
+            ticker="MSFT",
+            zoom=1.25  # 125% zoom - larger charts and text
+        )
     """
     
     command = {
         "action": "set_layout",
         "layout": {
             "mode": layout_mode,
-            "dashboards": dashboards,
-            "ticker": ticker
+            "paneltype": paneltype,
+            "ticker": ticker,
+            "minimize": minimize,
+            "maximize": maximize,
+            "zoom": zoom
         },
         "timestamp": "{{ timestamp }}"
     }
@@ -289,70 +352,15 @@ def create_dashboard_alert(
     
     return command
 
-
-@function_tool
-def execute_dashboard_comparison(
-    ticker_primary: str,
-    tickers_compare: List[str],
-    comparison_type: str,
-    metrics: List[str],
-    timeframe: str = "1Y"
-) -> Dict[str, Any]:
-    """
-    Set up a comparison view between multiple tickers across dashboards.
-    
-    Use this to perform competitive analysis or sector comparisons.
-    
-    Args:
-        ticker_primary: Primary ticker to analyze
-        tickers_compare: List of tickers to compare against (up to 5)
-        comparison_type: Type of comparison
-            - "price_performance": Price chart overlay
-            - "fundamentals": Financial metrics comparison
-            - "peer_analysis": Comparative peer analysis
-            - "market_position": Market positioning comparison
-            
-        metrics: Specific metrics to compare (varies by comparison_type)
-        timeframe: Time period for comparison
-    
-    Returns:
-        JSON command to set up comparison view
-        
-    Example:
-        # Compare AAPL vs competitors on peer analysis
-        execute_dashboard_comparison(
-            ticker_primary="AAPL",
-            tickers_compare=["MSFT", "GOOGL", "META"],
-            comparison_type="peer_analysis",
-            metrics=["P/E", "P/S", "EV/EBITDA", "PEG"],
-            timeframe="1Y"
-        )
-    """
-    
-    command = {
-        "action": "setup_comparison",
-        "comparison": {
-            "primary": ticker_primary,
-            "compare_to": tickers_compare,
-            "type": comparison_type,
-            "metrics": metrics,
-            "timeframe": timeframe
-        },
-        "timestamp": "{{ timestamp }}"
-    }
-    
-    return command
-
-
 @function_tool
 def reset_dashboards() -> Dict[str, Any]:
     """
-    Reset all dashboards to default state and clear any active analyses.
+    Reset all paneltype to default state and clear any active analyses.
     
     Use this to start fresh or clear the screen between different analyses.
     
     Returns:
-        JSON command to reset dashboards
+        JSON command to reset paneltype
     """
     
     command = {
@@ -370,7 +378,7 @@ def reset_dashboards() -> Dict[str, Any]:
 #     Step 1: Set up comprehensive view with price chart, news, and indices
 #     control_dashboard_layout(
 #         layout_mode="custom",
-#         dashboards=[
+#         paneltype=[
 #             {
 #                 "type": "price_chart",
 #                 "position": {"x": 0, "y": 0},

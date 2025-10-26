@@ -9,10 +9,10 @@ from agents.extensions.memory.sqlalchemy_session import SQLAlchemySession
 project_root = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(project_root))
 import betasense
-from prompts.systemprompt import SYSTEM_PROMPT
-from auth.clients import sqlalchemy_client
-from agent.browsertools import control_browser
-from agent.backendtools import (
+from betasense.src.prompts.systemprompt import SYSTEM_PROMPT
+from betasense.src.auth.clients import sqlalchemy_client
+from betasense.src.agent.browsertools import control_browser
+from betasense.src.agent.backendtools import (
     search_web,
     earnings_transcript,
     investor_presentation,
@@ -33,11 +33,11 @@ from agent.backendtools import (
     street_consensus,
     supply_chain_analysis,
 )
-from agent.playbooktools import (
+from betasense.src.agent.playbooktools import (
     retrieve_perspective_playbook, 
     retrieve_industry_playbook
 )
-from agent.generaltools import (
+from betasense.src.agent.generaltools import (
     emit_thinking_process,
     emit_finding_summary,
 )

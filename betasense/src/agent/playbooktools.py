@@ -7,7 +7,7 @@ from agents import function_tool
 project_root = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(project_root))
 import betasense
-from prompts.industryplaybooks import (
+from betasense.src.prompts.industryplaybooks import (
     TMT_PLAYBOOK,
     INDUSTRIALS_PLAYBOOK,
     CONSUMER_DISCRETIONARY_PLAYBOOK,
@@ -18,7 +18,7 @@ from prompts.industryplaybooks import (
     MATERIALS_PLAYBOOK,
     UTILITIES_PLAYBOOK,
 )
-from prompts.perspectiveplaybooks import (
+from betasense.src.prompts.perspectiveplaybooks import (
     LONG_TERM_VALUE_INVESTOR_PLAYBOOK,
     SHORT_TERM_SWING_TRADE_PLAYBOOK,
     MERGER_ARBITRAGE_PLAYBOOK,

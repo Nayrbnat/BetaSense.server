@@ -50,11 +50,14 @@ def press_release():
 
 
 @function_tool
-def expert_transcripts():
+def expert_transcripts(search_query: str):
     '''
     Use this tool to retrieve expert transcripts from database and return a text output
     '''
-    pass
+    return client.vector_stores.search(
+        vector_store_id="vs_68fe0635411881919e3112029cca1fba",
+        query=search_query
+    )
 
 
 @function_tool
@@ -69,8 +72,15 @@ def euromonitor(search_query: str):
 
 
 @function_tool
-def financials():
-    pass
+def financials(search_query: str):
+    """
+    Use this tool to retrieve financial data from database and return a text output
+    """
+    return client.vector_stores.search(
+    vector_store_id="vs_68fe0234abf08191954d67b63c4daacb",
+    query=search_query
+    )
+
 
 
 @function_tool
@@ -95,7 +105,14 @@ def comps():
 
 
 @function_tool
-def insider_transactions():
+def insider_transactions(search_query: str):
+    """
+    Use this tool to retrieve information about insider transactions and return a text output
+    """
+    return client.vector_stores.search(
+        vector_store_id="vs_68fe087329a481919322505a34a5a681",
+        query=search_query
+    )
     pass
 
 
@@ -107,3 +124,14 @@ def insider_ownership():
 @function_tool
 def performance_based_compensation():
     pass
+
+@function_tool
+def alternative_data(search_query: str):
+
+    """
+    Use this tool to retrieve alternative data from various sources and return a text output
+    """
+    return client.vector_stores.search(
+        vector_store_id="vs_68fe06aeda788191a2394128ccd5cb52",
+        query=search_query
+    )
